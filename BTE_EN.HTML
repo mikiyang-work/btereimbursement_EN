@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#f7f5f2" />
 
-  <title>BTE Expense Reimbursement Calculator</title>
+  <title>BTE 出差核銷計算機</title>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -16,9 +16,9 @@
         extend: {
           fontFamily: {
             sans: [
-              '"Inter"',
-              '"Noto Sans"',
-              'Arial',
+              '"Noto Sans TC"',
+              '"PingFang TC"',
+              '"Microsoft JhengHei"',
               'sans-serif'
             ]
           },
@@ -93,6 +93,12 @@
         transform: translateY(0);
       }
     }
+
+    @media (max-width: 640px) {
+      .mobile-small-text {
+        font-size: 13px;
+      }
+    }
   </style>
 </head>
 
@@ -103,7 +109,6 @@
     <!-- Header -->
     <header class="mb-6 sm:mb-8">
       <div class="flex items-start gap-4">
-
         <div
           class="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-2xl bg-[#ded5c8] flex items-center justify-center shadow-sm"
         >
@@ -137,38 +142,35 @@
           </p>
 
           <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight text-stone-800">
-            BTE Expense Reimbursement Calculator
+            BTE 出差核銷計算機
           </h1>
 
           <p class="text-sm sm:text-base text-stone-500 mt-2 leading-relaxed">
-            Enter your reimbursement details to calculate the estimated BTE reimbursement amount.
+            輸入核銷資料後，即時計算預計 BTE 核銷收到金額。
           </p>
         </div>
       </div>
     </header>
-
 
     <!-- Main Card -->
     <section
       class="bg-white/90 backdrop-blur rounded-[28px] shadow-soft border border-stone-200/70 overflow-hidden"
     >
 
-      <!-- Advance Payment Mode -->
+      <!-- Mode -->
       <div class="p-5 sm:p-7 pb-3 sm:pb-4">
-
         <p class="text-sm font-medium text-stone-500 mb-3">
-          Advance Payment Status
+          預支款狀態
         </p>
 
         <div class="grid grid-cols-2 gap-1.5 bg-[#f1eee9] rounded-2xl p-1.5">
-
           <button
             id="advanceTab"
             type="button"
             class="tab-btn active rounded-xl px-3 py-3 text-sm sm:text-base font-medium text-center"
             onclick="switchMode('advance')"
           >
-            With Advance Payment
+            有申請預支款
           </button>
 
           <button
@@ -177,31 +179,24 @@
             class="tab-btn rounded-xl px-3 py-3 text-sm sm:text-base font-medium text-stone-500 text-center"
             onclick="switchMode('normal')"
           >
-            Without Advance Payment
+            無申請預支款
           </button>
-
         </div>
       </div>
 
-
       <!-- Formula -->
       <div class="px-5 sm:px-7 pb-5">
-
         <div class="rounded-2xl bg-[#f8f6f2] border border-[#ebe6de] px-4 py-4">
-
           <div class="flex gap-3">
-
             <div
               class="w-8 h-8 shrink-0 rounded-full bg-[#e8e0d4] flex items-center justify-center"
             >
-              <span class="text-sm font-semibold text-[#756b5d]">
-                fx
-              </span>
+              <span class="text-sm font-semibold text-[#756b5d]">fx</span>
             </div>
 
             <div>
               <p class="text-xs font-semibold tracking-wider text-stone-400 mb-1.5">
-                CALCULATION FORMULA
+                計算公式
               </p>
 
               <p
@@ -209,31 +204,26 @@
                 class="text-sm text-stone-600 leading-6"
               ></p>
             </div>
-
           </div>
         </div>
       </div>
 
-
-      <!-- Input Form -->
+      <!-- Form -->
       <div class="px-5 sm:px-7 pb-6 sm:pb-8">
-
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-          <!-- Receipt Amount -->
+          <!-- Receipt -->
           <div>
-
             <label
               for="receiptAmount"
               class="block text-sm font-medium text-stone-700 mb-2"
             >
-              Receipt Reimbursement Amount
+              憑證核銷金額
             </label>
 
             <div
               class="input-box flex items-center bg-white border border-stone-200 rounded-2xl overflow-hidden"
             >
-
               <div class="flex-1 px-4">
                 <input
                   id="receiptAmount"
@@ -250,32 +240,26 @@
               <span class="px-4 text-sm font-medium text-stone-400 border-l border-stone-100">
                 NTD
               </span>
-
             </div>
 
             <p class="mt-1.5 text-xs text-stone-400">
-              Total reimbursable receipt amount in NTD
+              台幣憑證核銷總金額
             </p>
-
           </div>
 
-
-          <!-- Daily Allowance -->
+          <!-- Daily allowance -->
           <div>
-
             <label
               for="dailyAllowance"
               class="block text-sm font-medium text-stone-700 mb-2"
             >
-              Daily Allowance
+              日支費
             </label>
 
             <div
               class="input-box flex items-center bg-white border border-stone-200 rounded-2xl overflow-hidden"
             >
-
               <div class="flex-1 px-4">
-
                 <input
                   id="dailyAllowance"
                   type="number"
@@ -286,80 +270,66 @@
                   class="w-full py-3.5 bg-transparent text-base text-stone-800 outline-none"
                   oninput="calculate()"
                 />
-
               </div>
 
               <span class="px-4 text-sm font-medium text-stone-400 border-l border-stone-100">
                 USD
               </span>
-
             </div>
 
             <p class="mt-1.5 text-xs text-stone-400">
-              Total reimbursable daily allowance
+              本次可核銷之日支費總額
             </p>
-
           </div>
 
-
-          <!-- Exchange Rate -->
+          <!-- Exchange rate -->
           <div>
-
             <label
               for="exchangeRate"
               class="block text-sm font-medium text-stone-700 mb-2"
             >
-              Exchange Rate
+              核銷匯率
             </label>
 
             <div
               class="input-box flex items-center bg-white border border-stone-200 rounded-2xl overflow-hidden"
             >
-
               <div class="flex-1 px-4">
-
                 <input
                   id="exchangeRate"
                   type="number"
                   inputmode="decimal"
                   min="0"
                   step="0.0001"
-                  placeholder="e.g. 31.8500"
+                  placeholder="例如 31.8500"
                   class="w-full py-3.5 bg-transparent text-base text-stone-800 outline-none"
                   oninput="calculate()"
                 />
-
               </div>
 
               <span class="px-3 sm:px-4 text-xs sm:text-sm font-medium text-stone-400 border-l border-stone-100 whitespace-nowrap">
                 NTD / USD
               </span>
-
             </div>
 
             <p class="mt-1.5 text-xs text-stone-400">
-              NTD exchange rate for 1 USD
+              1 USD 對應之台幣匯率
             </p>
-
           </div>
 
-
-          <!-- Business Meal Deduction -->
+          <!-- Meal deduction -->
           <div>
-
             <label
               for="mealDeduction"
               class="block text-sm font-medium text-stone-700 mb-2"
             >
-              Business Meal Deduction
+              交際扣餐費
             </label>
 
             <div
               class="input-box flex items-center bg-white border border-stone-200 rounded-2xl overflow-hidden"
             >
-
               <div class="flex-1 px-4">
-
                 <input
                   id="mealDeduction"
                   type="number"
@@ -370,38 +340,31 @@
                   class="w-full py-3.5 bg-transparent text-base text-stone-800 outline-none"
                   oninput="calculate()"
                 />
-
               </div>
 
               <span class="px-4 text-sm font-medium text-stone-400 border-l border-stone-100">
                 USD
               </span>
-
             </div>
 
             <p class="mt-1.5 text-xs text-stone-400">
-              Meal deduction amount per business meal
+              每餐應扣除之 USD 金額
             </p>
-
           </div>
 
-
-          <!-- Number of Meals -->
+          <!-- Meal count -->
           <div>
-
             <label
               for="mealCount"
               class="block text-sm font-medium text-stone-700 mb-2"
             >
-              Number of Business Meals
+              交際餐數
             </label>
 
             <div
               class="input-box flex items-center bg-white border border-stone-200 rounded-2xl overflow-hidden"
             >
-
               <div class="flex-1 px-4">
-
                 <input
                   id="mealCount"
                   type="number"
@@ -412,41 +375,34 @@
                   class="w-full py-3.5 bg-transparent text-base text-stone-800 outline-none"
                   oninput="calculate()"
                 />
-
               </div>
 
               <span class="px-4 text-sm font-medium text-stone-400 border-l border-stone-100">
-                Meals
+                餐
               </span>
-
             </div>
 
             <p class="mt-1.5 text-xs text-stone-400">
-              Number of meals provided or paid as business entertainment
+              公司招待或交際餐點數量
             </p>
-
           </div>
 
-
-          <!-- Advance Payment -->
+          <!-- Advance -->
           <div
             id="advanceField"
             class="fade-in"
           >
-
             <label
               for="advanceAmount"
               class="block text-sm font-medium text-stone-700 mb-2"
             >
-              Advance Payment Received
+              原先已預支金額
             </label>
 
             <div
               class="input-box flex items-center bg-white border border-stone-200 rounded-2xl overflow-hidden"
             >
-
               <div class="flex-1 px-4">
-
                 <input
                   id="advanceAmount"
                   type="number"
@@ -457,36 +413,30 @@
                   class="w-full py-3.5 bg-transparent text-base text-stone-800 outline-none"
                   oninput="calculate()"
                 />
-
               </div>
 
               <span class="px-4 text-sm font-medium text-stone-400 border-l border-stone-100">
                 NTD
               </span>
-
             </div>
 
             <p class="mt-1.5 text-xs text-stone-400">
-              Advance payment received before the business trip
+              出差前公司已支付之預支款
             </p>
-
           </div>
 
         </div>
       </div>
 
-
       <!-- Divider -->
       <div class="mx-5 sm:mx-7 border-t border-dashed border-stone-200"></div>
-
 
       <!-- Breakdown -->
       <div class="p-5 sm:p-7">
 
         <div class="flex items-center justify-between mb-4">
-
           <h2 class="font-semibold text-stone-700">
-            Calculation Breakdown
+            計算明細
           </h2>
 
           <button
@@ -494,19 +444,15 @@
             onclick="resetCalculator()"
             class="text-xs sm:text-sm px-3 py-1.5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-500 transition"
           >
-            Reset
+            清除重填
           </button>
-
         </div>
-
 
         <div class="rounded-2xl border border-stone-200 overflow-hidden bg-white">
 
-          <!-- Receipt -->
           <div class="flex justify-between items-center gap-4 px-4 py-3.5 border-b border-stone-100">
-
             <span class="text-sm text-stone-500">
-              Receipt Reimbursement
+              憑證核銷金額
             </span>
 
             <span
@@ -515,17 +461,12 @@
             >
               NT$ 0
             </span>
-
           </div>
 
-
-          <!-- Daily Allowance -->
           <div class="flex justify-between items-center gap-4 px-4 py-3.5 border-b border-stone-100">
-
             <div>
-
               <span class="text-sm text-stone-500">
-                Daily Allowance Conversion
+                日支費換算
               </span>
 
               <p
@@ -534,7 +475,6 @@
               >
                 USD 0 × 0
               </p>
-
             </div>
 
             <span
@@ -543,26 +483,20 @@
             >
               + NT$ 0
             </span>
-
           </div>
 
-
-          <!-- Meal Deduction -->
           <div class="flex justify-between items-center gap-4 px-4 py-3.5 border-b border-stone-100">
-
             <div>
-
               <span class="text-sm text-stone-500">
-                Business Meal Deduction
+                交際扣餐費
               </span>
 
               <p
                 id="mealFormula"
                 class="text-xs text-stone-400 mt-0.5"
               >
-                USD 0 × 0 × 0 Meals
+                USD 0 × 0 × 0 餐
               </p>
-
             </div>
 
             <span
@@ -571,18 +505,14 @@
             >
               − NT$ 0
             </span>
-
           </div>
 
-
-          <!-- Advance Payment -->
           <div
             id="summaryAdvanceRow"
             class="flex justify-between items-center gap-4 px-4 py-3.5"
           >
-
             <span class="text-sm text-stone-500">
-              Advance Payment Received
+              原先已預支金額
             </span>
 
             <span
@@ -591,61 +521,49 @@
             >
               − NT$ 0
             </span>
-
           </div>
 
         </div>
       </div>
 
-
       <!-- Result -->
       <div class="px-5 sm:px-7 pb-6 sm:pb-8">
-
         <div
           id="resultCard"
           class="result-card rounded-[24px] bg-[#ede7dc] border border-[#e1d8c9] p-5 sm:p-6"
         >
-
           <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
 
             <div>
-
               <p class="text-sm font-medium text-[#756d62]">
-                Estimated BTE Reimbursement Amount
+                BTE 核銷預計收到金額
               </p>
 
               <p
                 id="resultHint"
                 class="text-xs text-[#978d7f] mt-1"
               >
-                Business meal deductions and advance payment have been deducted
+                已扣除交際餐費及預支款
               </p>
-
             </div>
 
-
             <div class="sm:text-right">
-
               <p
                 id="resultAmount"
                 class="text-3xl sm:text-4xl font-semibold tracking-tight text-[#4c473f]"
               >
                 NT$ 0
               </p>
-
             </div>
 
           </div>
 
-
-          <!-- Negative Result Warning -->
+          <!-- Negative warning -->
           <div
             id="negativeWarning"
             class="hidden mt-4 pt-4 border-t border-[#d8cdbd]"
           >
-
             <div class="flex items-start gap-2 text-sm text-[#8a6056]">
-
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
@@ -664,24 +582,18 @@
               </svg>
 
               <span>
-                The calculated amount is negative. This may indicate that the advance payment received exceeds the final reimbursable amount. Please confirm whether the excess advance payment needs to be returned.
+                計算結果為負數，表示預支款可能高於本次實際可核銷金額，請再確認是否需辦理預支款繳回。
               </span>
-
             </div>
-
           </div>
-
         </div>
       </div>
 
     </section>
 
-
     <!-- Notes -->
     <section class="mt-5 rounded-2xl bg-white/60 border border-stone-200/70 px-4 sm:px-5 py-4">
-
       <div class="flex items-start gap-3">
-
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="18"
@@ -700,17 +612,12 @@
         </svg>
 
         <div class="text-xs sm:text-sm leading-6 text-stone-500">
-
           <p>
-            This calculator is provided for BTE reimbursement estimation purposes only. The final reimbursement amount is subject to Finance review and the applicable exchange rate.
+            本工具提供 BTE 核銷金額試算，實際入帳金額仍應以公司財務審核結果及適用匯率為準。
           </p>
-
         </div>
-
       </div>
-
     </section>
-
 
     <footer class="text-center text-xs text-stone-400 py-6">
       BTE Expense Calculator
@@ -720,12 +627,9 @@
 
 
   <script>
-
     let currentMode = 'advance';
 
-
     const elements = {
-
       advanceTab: document.getElementById('advanceTab'),
       normalTab: document.getElementById('normalTab'),
       advanceField: document.getElementById('advanceField'),
@@ -741,10 +645,8 @@
       summaryReceipt: document.getElementById('summaryReceipt'),
       dailyFormula: document.getElementById('dailyFormula'),
       summaryDaily: document.getElementById('summaryDaily'),
-
       mealFormula: document.getElementById('mealFormula'),
       summaryMeal: document.getElementById('summaryMeal'),
-
       summaryAdvanceRow: document.getElementById('summaryAdvanceRow'),
       summaryAdvance: document.getElementById('summaryAdvance'),
 
@@ -752,20 +654,16 @@
       resultHint: document.getElementById('resultHint'),
       resultCard: document.getElementById('resultCard'),
       negativeWarning: document.getElementById('negativeWarning')
-
     };
 
 
     /**
-     * Switch between advance / no advance modes
+     * 切換有／無預支款模式
      */
     function switchMode(mode) {
-
       currentMode = mode;
 
-
       if (mode === 'advance') {
-
         elements.advanceTab.classList.add('active');
         elements.advanceTab.classList.remove('text-stone-500');
 
@@ -775,21 +673,15 @@
         elements.advanceField.classList.remove('hidden');
         elements.summaryAdvanceRow.classList.remove('hidden');
 
-
         elements.formulaText.innerHTML =
-          '(Receipt Reimbursement Amount <strong>NTD</strong> + ' +
-          'Daily Allowance <strong>USD</strong> × Exchange Rate) ' +
-          '− (Business Meal Deduction <strong>USD</strong> × Exchange Rate × Number of Meals) ' +
-          '− Advance Payment Received';
-
+          '（憑證核銷金額 <strong>NTD</strong> ＋ 日支費 <strong>USD</strong> × 匯率）' +
+          ' − （交際扣餐費 <strong>USD</strong> × 匯率 × 餐數）' +
+          ' − 原先已預支金額';
 
         elements.resultHint.textContent =
-          'Business meal deductions and advance payment have been deducted';
-
+          '已扣除交際餐費及原先預支款';
 
       } else {
-
-
         elements.normalTab.classList.add('active');
         elements.normalTab.classList.remove('text-stone-500');
 
@@ -799,29 +691,22 @@
         elements.advanceField.classList.add('hidden');
         elements.summaryAdvanceRow.classList.add('hidden');
 
-
         elements.formulaText.innerHTML =
-          '(Receipt Reimbursement Amount <strong>NTD</strong> + ' +
-          'Daily Allowance <strong>USD</strong> × Exchange Rate) ' +
-          '− (Business Meal Deduction <strong>USD</strong> × Exchange Rate × Number of Meals)';
-
+          '（憑證核銷金額 <strong>NTD</strong> ＋ 日支費 <strong>USD</strong> × 匯率）' +
+          ' − （交際扣餐費 <strong>USD</strong> × 匯率 × 餐數）';
 
         elements.resultHint.textContent =
-          'Business meal deductions have been deducted';
-
+          '已扣除交際餐費';
       }
 
-
       calculate();
-
     }
 
 
     /**
-     * Safely convert input to number
+     * 將輸入值安全轉成數字
      */
     function getNumber(element) {
-
       const value = parseFloat(element.value);
 
       if (isNaN(value) || value < 0) {
@@ -829,191 +714,144 @@
       }
 
       return value;
-
     }
 
 
     /**
-     * Format NTD
+     * 格式化 NTD
      */
     function formatNTD(value) {
-
       const rounded = Math.round(value);
 
-      return new Intl.NumberFormat('en-US', {
+      return new Intl.NumberFormat('zh-TW', {
         maximumFractionDigits: 0
       }).format(rounded);
-
     }
 
 
     /**
-     * Format general numbers
+     * 格式化一般數字
      */
     function formatNumber(value, digits = 2) {
-
-      return new Intl.NumberFormat('en-US', {
+      return new Intl.NumberFormat('zh-TW', {
         maximumFractionDigits: digits
       }).format(value);
-
     }
 
 
     /**
-     * Calculate reimbursement
+     * 執行計算
      */
     function calculate() {
+      const receipt = getNumber(elements.receiptAmount);
+      const dailyAllowance = getNumber(elements.dailyAllowance);
+      const exchangeRate = getNumber(elements.exchangeRate);
+      const mealDeduction = getNumber(elements.mealDeduction);
+      const mealCount = getNumber(elements.mealCount);
+      const advanceAmount = getNumber(elements.advanceAmount);
 
-      const receipt =
-        getNumber(elements.receiptAmount);
-
-      const dailyAllowance =
-        getNumber(elements.dailyAllowance);
-
-      const exchangeRate =
-        getNumber(elements.exchangeRate);
-
-      const mealDeduction =
-        getNumber(elements.mealDeduction);
-
-      const mealCount =
-        getNumber(elements.mealCount);
-
-      const advanceAmount =
-        getNumber(elements.advanceAmount);
-
-
-      // Daily allowance converted to NTD
+      // 日支費台幣換算
       const dailyNTD =
         dailyAllowance * exchangeRate;
 
-
-      // Business meal deduction converted to NTD
+      // 交際扣餐金額
       const mealDeductionNTD =
-        mealDeduction *
-        exchangeRate *
-        mealCount;
+        mealDeduction * exchangeRate * mealCount;
 
-
-      // Reimbursement before advance payment
+      // 無預支款核銷金額
       let result =
         receipt +
         dailyNTD -
         mealDeductionNTD;
 
-
-      // Deduct advance payment if applicable
+      // 有預支款時再扣除預支金額
       if (currentMode === 'advance') {
-
         result -= advanceAmount;
-
       }
 
 
-      // ---------------------------------
-      // Update Calculation Breakdown
-      // ---------------------------------
+      // -------------------------------
+      // 更新計算明細
+      // -------------------------------
 
       elements.summaryReceipt.textContent =
         `NT$ ${formatNTD(receipt)}`;
 
-
       elements.dailyFormula.textContent =
         `USD ${formatNumber(dailyAllowance)} × ${formatNumber(exchangeRate, 4)}`;
-
 
       elements.summaryDaily.textContent =
         `+ NT$ ${formatNTD(dailyNTD)}`;
 
-
       elements.mealFormula.textContent =
-        `USD ${formatNumber(mealDeduction)} × ${formatNumber(exchangeRate, 4)} × ${formatNumber(mealCount, 0)} Meals`;
-
+        `USD ${formatNumber(mealDeduction)} × ${formatNumber(exchangeRate, 4)} × ${formatNumber(mealCount, 0)} 餐`;
 
       elements.summaryMeal.textContent =
         `− NT$ ${formatNTD(mealDeductionNTD)}`;
-
 
       elements.summaryAdvance.textContent =
         `− NT$ ${formatNTD(advanceAmount)}`;
 
 
-      // ---------------------------------
-      // Update Final Result
-      // ---------------------------------
+      // -------------------------------
+      // 更新結果
+      // -------------------------------
 
       if (result < 0) {
-
         elements.resultAmount.textContent =
           `− NT$ ${formatNTD(Math.abs(result))}`;
 
-
         elements.negativeWarning.classList.remove('hidden');
-
 
         elements.resultCard.classList.remove(
           'bg-[#ede7dc]',
           'border-[#e1d8c9]'
         );
 
-
         elements.resultCard.classList.add(
           'bg-[#f3e7e3]',
           'border-[#ead5cf]'
         );
 
-
         elements.resultAmount.classList.remove(
           'text-[#4c473f]'
         );
-
 
         elements.resultAmount.classList.add(
           'text-[#875a50]'
         );
 
-
       } else {
-
-
         elements.resultAmount.textContent =
           `NT$ ${formatNTD(result)}`;
 
-
         elements.negativeWarning.classList.add('hidden');
-
 
         elements.resultCard.classList.remove(
           'bg-[#f3e7e3]',
           'border-[#ead5cf]'
         );
 
-
         elements.resultCard.classList.add(
           'bg-[#ede7dc]',
           'border-[#e1d8c9]'
         );
 
-
         elements.resultAmount.classList.remove(
           'text-[#875a50]'
         );
 
-
         elements.resultAmount.classList.add(
           'text-[#4c473f]'
         );
-
       }
-
     }
 
 
     /**
-     * Reset all fields
+     * 清除所有資料
      */
     function resetCalculator() {
-
       elements.receiptAmount.value = '';
       elements.dailyAllowance.value = '';
       elements.exchangeRate.value = '';
@@ -1024,16 +862,14 @@
       calculate();
 
       elements.receiptAmount.focus();
-
     }
 
 
     /**
-     * Default mode
+     * 預設模式
      */
     switchMode('advance');
-
   </script>
 
 </body>
-</html>D
+</html>
